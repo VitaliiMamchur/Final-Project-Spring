@@ -22,7 +22,6 @@ public class MasterRepairRequestController {
     @RequestMapping(value = {"/masterlist"}, method = RequestMethod.GET)
     public String currentMasterRepairRequestList(Model model) {
         model.addAttribute("repairRequests", repairRequestService.getMasterRepairRequestList());
-
         return "masterlist";
     }
 

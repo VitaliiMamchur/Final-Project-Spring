@@ -13,8 +13,6 @@ import ua.mamchur.springproject.model.RepairRequest;
 import ua.mamchur.springproject.service.RepairRequestService;
 import ua.mamchur.springproject.service.RepairRequestStatusService;
 
-import java.util.Map;
-
 @Controller
 public class ManagerRepairRequestController {
 
@@ -24,16 +22,17 @@ public class ManagerRepairRequestController {
     @PreAuthorize("hasAuthority('ROLE_MANAGER')")
     @RequestMapping(value = {"/managerlist"}, method = RequestMethod.GET)
     public String currentManagerRepairRequestList(Model model) {
-
         model.addAttribute("repairRequests", repairRequestService.getManagerRepairRequestList());
-
-
         return "managerlist";
     }
 
     @PreAuthorize("hasAuthority('ROLE_MANAGER')")
     @PostMapping(value = "/managerlist/{id}")
-    public String acceptCurrentRequestWithPrice(@PathVariable("id") Long id, RepairRequest repairRequest, RedirectAttributes redirectAttributes) {
+    public String acceptCurrentRequestWithPrice(
+            @PathVariable("id") Long id,
+            RepairRequest repairRequest,
+            RedirectAttributes redirectAttributes
+    ) {
         repairRequestService.changeRepairRequestStatus(id, RepairRequestStatusService.ACCEPTED_REQUEST);
         repairRequestService.edit(id, repairRequest);
         redirectAttributes.addFlashAttribute("message", "The request is successfully accepted.");
@@ -43,9 +42,8 @@ public class ManagerRepairRequestController {
 
     @PreAuthorize("hasAuthority('ROLE_MANAGER')")
     @PostMapping(value = "/decliningmanagerlist/{id}")
-    public String declineRequest(Map<String, Object> model, @PathVariable("id") Long id) {
+    public String declineRequest(@PathVariable("id") Long id) {
         repairRequestService.changeRepairRequestStatus(id, RepairRequestStatusService.DECLINED_REQUEST);
-
         return "redirect:/managerlist";
     }
 }

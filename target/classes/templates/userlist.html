@@ -1,67 +1,61 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Manager Statement List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
-   <!-- <link rel="stylesheet" type="text/css" href="/css/userstatementlistStyle.css">-->
+    <title th:text="#{userlist.title}"></title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="/js/script.js"></script>
-
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
+
 <body>
+
     <header>
         <th:block th:include="/_menu"></th:block>
     </header>
-<main role="main">
-    <div class="jumbotron">
-        <div class="container">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Theme</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>FeedBack</th>
-                        <th></th>
-                    </tr>
-                    <tr th:each="repairRequest : ${repairRequests}">
-                        <div th:if="${repairRequest.active == true}">
-                            <td th:utext="${repairRequest.theme}">...</td>
-                            <td th:utext="${repairRequest.description}">...</td>
-                            <td th:utext="${repairRequest.price}">...</td>
-                            <td th:utext="${repairRequest.statusToString()}">...</td>
 
-
-                            <form th:if="${repairRequest.feedback == null}"th:action="@{/userlist/}+${repairRequest.id}" method="post">
-                                <td><div><label> Feedback: <input type="text" name="feedback" required/> </label></div></td>
-                                <td ><div><button class="btn btn-info" type="submit">Send feedback</button></div></td>
-                            </form>
-                            <td th:utext="${repairRequest.feedback}">...</td>
-
-                        </div>
-                    </tr>
-                </thead>
+    <main role="main">
+        <div class="jumbotron">
+            <div class="container">
                 <div th:if="${message}" th:fragment="alert (type, message)" class="alert alert-dismissible" th:classappend="'alert-' + ${type}">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <span th:text="${message}">Test</span>
                 </div>
-            </table>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th th:text="#{userlist.tablehead.theme}"></th>
+                            <th th:text="#{userlist.tablehead.description}"></th>
+                            <th th:text="#{userlist.tablehead.price}"></th>
+                            <th th:text="#{userlist.tablehead.status}"></th>
+                            <th th:text="#{userlist.tablehead.feedback}"></th>
+                            <th></th>
+                        </tr>
+                        <tr th:each="repairRequest : ${repairRequests}">
+                            <div th:if="${repairRequest.active == true}">
+                                <td th:utext="${repairRequest.theme}">...</td>
+                                <td th:utext="${repairRequest.description}">...</td>
+                                <td th:utext="${repairRequest.price}">...</td>
+                                <td th:utext="${repairRequest.statusToString()}">...</td>
+                                <form th:if="${repairRequest.feedback == null}"th:action="@{/userlist/}+${repairRequest.id}" method="post">
+                                    <td><div><label> Feedback: <input type="text" name="feedback" required/> </label></div></td>
+                                    <td ><div><button class="btn btn-info" type="submit" th:text="#{userlist.button.feedback}"></button></div></td>
+                                </form>
+                                <td th:utext="${repairRequest.feedback}">...</td>
+                            </div>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
-
-<footer role="contentinfo" class="footer">
-    <div class="container">
-        <span class="text-muted">© Vitalii Mamchur, 2020</span>
-    </div>
-</footer>
+    <footer role="contentinfo" class="footer">
+        <div class="container">
+            <span class="text-muted">© Vitalii Mamchur, 2020</span>
+        </div>
+    </footer>
 
 </body>
 </html>

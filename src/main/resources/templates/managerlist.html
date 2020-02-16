@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Manager Statement List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title th:text="#{managerlist.title}"></title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
 
 </head>
+
 <body>
-<br>
+
 <header>
     <th:block th:include="/_menu"></th:block>
+    <br/><br/>
 </header>
 </br>
 
 <div class="container">
-    <div th:if="${message}" th:fragment="alert (type, message)" class="alert alert-dismissible" th:classappend="'alert-' + ${type}">
+    <div th:if="${message}" th:fragment="alert (type, message)" class="alert alert-dismissible"
+         th:classappend="'alert-' + ${type}">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span th:text="${message}">Test</span>
     </div>
     <table class="table">
         <thead class="thead-dark">
-            <tr>
-                <th scope="col">Theme</th>
-                <th scope="col">Description</th>
-                <th scope="col">Request Creator</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
+        <tr>
+            <th th:text="#{managerlist.tablehead.theme}"></th>
+            <th th:text="#{managerlist.tablehead.description}"></th>
+            <th th:text="#{managerlist.tablehead.request.creator}"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
         <tr th:each="repairRequest : ${repairRequests}" scope="row">
@@ -41,11 +43,26 @@
                 <td th:utext="${repairRequest.description}">...</td>
                 <td th:utext="${repairRequest.repairRequestCreator.getUsername()}">...</td>
                 <form th:action="@{/managerlist/}+${repairRequest.id}" method="post">
-                    <td><div><label> Price: <input type="number"  min="0" name="price" required/> </label></div></td>
-                    <td ><div><button type="submit" class="btn btn-success">Accept the request</button></div></td>
+                    <td>
+                        <div>
+                            <label th:text="#{managerlist.price.field}"></label>
+                            <input type="number" min="0" name="price" required/>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button type="submit" class="btn btn-success"
+                                    th:text="#{managerlist.button.accept}"></button>
+                        </div>
+                    </td>
                 </form>
                 <form th:action="'javascript:confirmDelete(' + ${repairRequest.id} + ');'">
-                    <td ><div><button type="submit" class="btn btn-danger">Decline the request</button></div></td>
+                    <td>
+                        <div>
+                            <button type="submit" class="btn btn-danger"
+                                    th:text="#{managerlist.button.decline}"></button>
+                        </div>
+                    </td>
                 </form>
             </div>
         </tr>
@@ -60,19 +77,17 @@
 </footer>
 
 <div class="modal" id="myModal">
-    <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Decline the request?</h4>
+                <h4 class="modal-title" th:text="#{managerlist.modal.title}"></h4>
             </div>
             <div class="modal-footer">
-            <form id="deleteForm" method="post" >
-                <input type="submit" id="submitBtn" value="Confirm">
-                <input type="button" value="Cancel" onclick="cancel()">
-            </form>
+                <form id="deleteForm" method="post">
+                    <input type="submit" id="submitBtn" th:value="#{managerlist.modal.confirm}"/>
+                    <input type="button" th:value="#{managerlist.modal.cancel}" onclick="cancel()">
+                </form>
             </div>
-
-
         </div>
     </div>
 </div>

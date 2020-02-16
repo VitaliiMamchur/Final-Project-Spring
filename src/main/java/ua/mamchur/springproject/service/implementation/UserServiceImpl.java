@@ -1,7 +1,6 @@
 package ua.mamchur.springproject.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,30 +20,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.getByUsername(username);
     }
 
-    public User findByUserDetails(UserDetails user) {
+    public User findByUserDetails(User user) {
         return userRepository.getByUsername(user.getUsername());
     }
 
     @Override
     public User create(User user) {
-
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
-
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             return null;
+        } else {
+            user.setActive(true);
+            user.getRoles().add(roleRepository.findByRole(Role.Names.ROLE_USER));
+            return userRepository.save(user);
         }
-
-        user.setActive(true);
-        user.getRoles().add(roleRepository.findByRole(Role.Names.ROLE_USER));
-
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void edit() {
-
     }
 }

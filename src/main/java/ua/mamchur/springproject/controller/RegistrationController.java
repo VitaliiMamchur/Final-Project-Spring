@@ -23,7 +23,7 @@ public class RegistrationController {
     public String createUser(User user, RedirectAttributes redirectAttributes) {
         User createdUser = userService.create(user);
         if (createdUser == null) {
-            redirectAttributes.addFlashAttribute("message", "Username is exist.");
+            redirectAttributes.addFlashAttribute("message", "User already exist. Try another username!");
             redirectAttributes.addFlashAttribute("type", "danger fade show");
             return "registration";
         }

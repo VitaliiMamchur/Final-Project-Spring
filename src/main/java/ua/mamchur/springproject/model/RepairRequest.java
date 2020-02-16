@@ -1,10 +1,9 @@
 package ua.mamchur.springproject.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name="repairRequest")
+@Table(name = "repairRequest")
 public class RepairRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -97,11 +96,9 @@ public class RepairRequest {
         this.status = status;
     }
 
-    public String statusToString()
-    {
+    public String statusToString() {
         String stringStatus;
-        switch (this.status.getId().intValue())
-        {
+        switch (this.status.getId().intValue()) {
             case 0:
                 stringStatus = "Please wait till manager accept your repair request.";
                 return stringStatus;

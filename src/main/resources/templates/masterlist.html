@@ -1,40 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Master Statement List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
+    <title th:text="#{masterlist.title}"></title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
-<body>
+
 <header>
     <th:block th:include="/_menu"></th:block>
+    <br/><br/><br/>
 </header>
 
 <div class="container">
-    <div th:if="${message}" th:fragment="alert (type, message)" class="alert alert-dismissible" th:classappend="'alert-' + ${type}">
+    <div th:if="${message}" th:fragment="alert (type, message)" class="alert alert-dismissible"
+         th:classappend="'alert-' + ${type}">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span th:text="${message}">Test</span>
     </div>
     <table class="table">
         <thead class="thead-dark">
         <tr>
-            <th>Theme</th>
-            <th>Description</th>
-            <th>Feedback</th>
-            <th>Price</th>
-            <th>Request Creator</th>
+            <th th:text="#{masterlist.tablehead.theme}"></th>
+            <th th:text="#{masterlist.tablehead.description}"></th>
+            <th th:text="#{masterlist.tablehead.price}"></th>
+            <th th:text="#{masterlist.tablehead.request.creator}"></th>
             <th></th>
         </tr>
         <tr th:each="repairRequest : ${repairRequests}">
             <div th:if="${repairRequest.active == true}">
                 <td th:utext="${repairRequest.theme}">...</td>
                 <td th:utext="${repairRequest.description}">...</td>
-                <td th:utext="${repairRequest.feedback}">...</td>
                 <td th:utext="${repairRequest.price}">...</td>
                 <td th:utext="${repairRequest.repairRequestCreator.getUsername()}">...</td>
                 <form th:action="@{/masterlist/}+${repairRequest.id}" method="post">
-                    <td ><div><button type="submit">Close the request</button></div></td>
+                    <td>
+                        <div>
+                            <button type="submit" th:text="#{masterlist.button.close}">Close</button>
+                        </div>
+                    </td>
                 </form>
             </div>
         </tr>

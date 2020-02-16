@@ -1,59 +1,72 @@
 <div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" role="navigation">
 
-        <a class="navbar-brand" href="/index" role="banner">Main</a>
-
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Переключить навигацию">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarsDefault">
+        <div class="collapse navbar-collapse container" th:with="urlBuilder=${@changeLanguage.apply('lang')}" id="navbarsDefault">
             <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="/index" role="banner" th:text="#{menu.button.main}"></a>
+                </li>
+
                 <div sec:authorize="isAuthenticated()">
                     <div sec:authorize="hasRole('ROLE_USER')">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/request">Create Repair Request<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/request" th:text="#{menu.button.create.request}"><span class="sr-only">(current)</span></a>
                         </li>
                     </div>
                 </div>
                 <div sec:authorize="isAuthenticated()">
                     <div sec:authorize="hasRole('ROLE_USER')">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/userlist">My Request List<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/userlist" th:text="#{menu.button.userlist}"><span class="sr-only">(current)</span></a>
                         </li>
                     </div>
                 </div>
                 <div sec:authorize="isAuthenticated()">
                     <div sec:authorize="hasRole('ROLE_MANAGER')">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/managerlist">Check Request List<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/managerlist" th:text="#{menu.button.managerlist}"><span class="sr-only">(current)</span></a>
                         </li>
                     </div>
                 </div>
                 <div sec:authorize="isAuthenticated()">
                     <div sec:authorize="hasRole('ROLE_MASTER')">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/masterlist">Check Request List<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/masterlist" th:text="#{menu.button.masterlist}"><span class="sr-only">(current)</span></a>
                         </li>
                     </div>
                 </div>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
                 <div sec:authorize="!isAuthenticated()">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/login">Log in<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/login" th:text="#{menu.button.login}"><span class="sr-only">(current)</span></a>
                     </li>
                 </div>
                 <div sec:authorize="!isAuthenticated()">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/registration">Sign in<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/registration" th:text="#{menu.button.signup}"><span class="sr-only">(current)</span></a>
                     </li>
                 </div>
                 <div sec:authorize="isAuthenticated()">
                     <li class="nav-item active">
-                        <a class="nav-link" th:href="@{/logout}">Log out</a>
+                        <a class="nav-link" th:href="@{/logout}" th:text="#{menu.button.logout}"></a>
                     </li>
                 </div>
+
+                <li>
+                    <a class="nav-link" th:href="@{${urlBuilder}(lang=en)}">Eng</a>
+                </li>
+                <li>
+                    <a class="nav-link" th:href="@{${urlBuilder}(lang=ua)}">Ua</a>
+                </li>
+
             </ul>
         </div>
     </nav>
-    </br></br>
+
 </div>

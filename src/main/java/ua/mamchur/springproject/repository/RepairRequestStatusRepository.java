@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import ua.mamchur.springproject.model.RepairRequestStatus;
 
 @Repository
-public interface RepairRequestStatusRepository extends JpaRepository<RepairRequestStatus,Long> {
+public interface RepairRequestStatusRepository extends JpaRepository<RepairRequestStatus, Long> {
     RepairRequestStatus findByStatus(String status);
 }

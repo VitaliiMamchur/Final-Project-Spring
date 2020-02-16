@@ -11,18 +11,19 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
     }
 
-
-    //Для js и css
     public MvcConfiguration() {
         super();
     }
+
     @Override
     public void configureDefaultServletHandling(final DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/resources/static/", "classpath:/resources/",
-            "classpath:/static/" };
+            "classpath:/static/"};
+
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");

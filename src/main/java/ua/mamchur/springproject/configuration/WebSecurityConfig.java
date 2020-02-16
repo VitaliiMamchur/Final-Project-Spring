@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import ua.mamchur.springproject.service.implementation.UserServiceImpl;
 
-import static ua.mamchur.springproject.model.Role.Names.ROLE_USER;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -23,8 +21,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/registration","/css/userstatementlistStyle.css").permitAll()
-                .antMatchers("/request").hasAuthority(ROLE_USER )
+                .antMatchers("/", "/index", "/registration", "login").permitAll()
+                .antMatchers("/request", "/userlist").hasAuthority("ROLE_USER")
+                .antMatchers("/masterlist").hasAuthority("ROLE_MANAGER")
+                .antMatchers("/masterlist").hasAuthority("ROLE_MASTER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
