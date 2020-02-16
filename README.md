@@ -8,5 +8,10 @@
 
 Как запустить?
 
-В пакете ua.mamchur.springproject находится клас ApplicationRunner,
-с помощью которого, мы запросто запускаем приложение
+- Скачайте репозиторий
+- После - создайте необходимую БД, с помощью скриптов, 
+которые находятся в "/resources/db/db.sql"
+- В папке /resources лежит файл application.properties
+  помейняйте значение "spring.jpa.hibernate.ddl-auto" на
+  "create-drop"
+- Далее запустите проект командой "mvn spring-boot:run"
