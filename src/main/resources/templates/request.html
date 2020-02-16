@@ -21,6 +21,11 @@
 <main role="main">
     <div class="jumbotron">
         <div class="container">
+            <div th:if="${message}" th:fragment="alert (type, message)" class="alert alert-dismissible"
+                 th:classappend="'alert-' + ${type}">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <span th:text="${message}">Test</span>
+            </div>
 
             <h1 th:text="#{request.presentation.message}"></h1>
             <form th:action="@{/request}" th:method="post">
@@ -35,12 +40,6 @@
                     <button class="btn btn-primary" type="submit" th:text="#{request.button.push}"></button>
                 </div>
             </form>
-            <br>
-            <div th:if="${message}" th:fragment="alert (type, message)" class="alert alert-dismissible"
-                 th:classappend="'alert-' + ${type}">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <span th:text="${message}">Test</span>
-            </div>
         </div>
     </div>
 </main>

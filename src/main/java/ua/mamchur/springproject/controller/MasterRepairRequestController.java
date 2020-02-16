@@ -1,5 +1,6 @@
 package ua.mamchur.springproject.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import ua.mamchur.springproject.service.RepairRequestStatusService;
 @Controller
 public class MasterRepairRequestController {
 
+    private static final Logger LOGGER = Logger.getLogger(MasterRepairRequestController.class);
     @Autowired
     RepairRequestService repairRequestService;
 
@@ -29,6 +31,7 @@ public class MasterRepairRequestController {
     @PostMapping(value = "/masterlist/{id}")
     public String closeAcceptedRequest(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         repairRequestService.changeRepairRequestStatus(id, RepairRequestStatusService.CLOSED_REQUEST);
+        LOGGER.info("The request with id " + id + " was closed successfully");
         redirectAttributes.addFlashAttribute("message", "The request is successfully closed");
         redirectAttributes.addFlashAttribute("type", "success fade show");
         return "redirect:/masterlist";

@@ -1,5 +1,6 @@
 package ua.mamchur.springproject.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import ua.mamchur.springproject.service.RepairRequestStatusService;
 @Controller
 public class ManagerRepairRequestController {
 
+    private static final Logger LOGGER = Logger.getLogger(ManagerRepairRequestController.class);
     @Autowired
     RepairRequestService repairRequestService;
 
@@ -33,6 +35,7 @@ public class ManagerRepairRequestController {
             RepairRequest repairRequest,
             RedirectAttributes redirectAttributes
     ) {
+        LOGGER.info("The request with id " + id + " was accepted");
         repairRequestService.changeRepairRequestStatus(id, RepairRequestStatusService.ACCEPTED_REQUEST);
         repairRequestService.edit(id, repairRequest);
         redirectAttributes.addFlashAttribute("message", "The request is successfully accepted.");
@@ -44,6 +47,7 @@ public class ManagerRepairRequestController {
     @PostMapping(value = "/decliningmanagerlist/{id}")
     public String declineRequest(@PathVariable("id") Long id) {
         repairRequestService.changeRepairRequestStatus(id, RepairRequestStatusService.DECLINED_REQUEST);
+        LOGGER.info("The request with id " + id + " was declined");
         return "redirect:/managerlist";
     }
 }

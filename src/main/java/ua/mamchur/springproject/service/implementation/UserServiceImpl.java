@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.mamchur.springproject.model.Role;
 import ua.mamchur.springproject.model.User;
 import ua.mamchur.springproject.repository.RoleRepository;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    @Transactional
     public User create(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             return null;

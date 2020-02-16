@@ -2,6 +2,7 @@ package ua.mamchur.springproject.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.mamchur.springproject.model.RepairRequest;
 import ua.mamchur.springproject.model.User;
 import ua.mamchur.springproject.repository.RepairRequestRepository;
@@ -23,6 +24,7 @@ public class RepairRequestServiceImpl implements RepairRequestService {
     RepairRequestStatusService repairRequestStatusService;
 
     @Override
+    @Transactional
     public void create(User currentUser, RepairRequest repairRequest) {
         repairRequest.setRepairRequestCreator(userService.findByUserDetails(currentUser));
         repairRequest.setStatus(repairRequestStatusRepository.findByStatus(RepairRequestStatusService.CURRENT_REQUEST));
@@ -32,6 +34,7 @@ public class RepairRequestServiceImpl implements RepairRequestService {
     }
 
     @Override
+    @Transactional
     public void edit(Long id, RepairRequest repairRequest) {
         repairRequestRepository.findById(id)
                 .ifPresent(old -> {
@@ -42,11 +45,13 @@ public class RepairRequestServiceImpl implements RepairRequestService {
     }
 
     @Override
+    @Transactional
     public List<RepairRequest> getAllByUser(User user) {
         return repairRequestRepository.findAllByRepairRequestCreatorId(userService.findByUserDetails(user).getId());
     }
 
     @Override
+    @Transactional
     public RepairRequest addFeedBack(Long id, String feedback) {
         RepairRequest repairRequest = repairRequestRepository.findById(id).get();
         if (repairRequest.getStatus() != repairRequestStatusService.findByStatus(repairRequestStatusService.CLOSED_REQUEST)) {
@@ -59,16 +64,19 @@ public class RepairRequestServiceImpl implements RepairRequestService {
     }
 
     @Override
+    @Transactional
     public List<RepairRequest> getMasterRepairRequestList() {
         return repairRequestRepository.findAllByStatus(repairRequestStatusRepository.findByStatus(repairRequestStatusService.ACCEPTED_REQUEST));
     }
 
     @Override
+    @Transactional
     public List<RepairRequest> getManagerRepairRequestList() {
         return repairRequestRepository.findAllByStatus(repairRequestStatusRepository.findByStatus(repairRequestStatusService.CURRENT_REQUEST));
     }
 
     @Override
+    @Transactional
     public void changeRepairRequestStatus(Long id, String repairRequestStatus) {
         repairRequestRepository.findById(id)
                 .ifPresent(repairRequest -> {
