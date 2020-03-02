@@ -18,7 +18,7 @@
 
 Используемые технологии:
 
-- Spring Boot
+- Spring Boot 
 - JPA
 - Maven
 - JUnit4
