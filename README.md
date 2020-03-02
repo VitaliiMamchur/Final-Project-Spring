@@ -15,3 +15,17 @@
   помейняйте значение "spring.jpa.hibernate.ddl-auto" на
   "create-drop"
 - Далее запустите проект командой "mvn spring-boot:run"
+
+Используемые технологии:
+
+- Spring Boot
+- JPA
+- Maven
+- JUnit4
+- Log4j
+- MySQL
+- HTML
+- CSS
+- ThymeLeaf
+- JavaScript
+- Bootstrap 4
